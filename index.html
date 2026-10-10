@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="mr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chhatrapati Retailer Portal</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">C</div><div><b>CHHATRAPATI</b><small>RETAILER PORTAL</small></div></div>
+    <nav>
+      <button class="nav active" data-page="dashboard">▦ &nbsp; Dashboard</button>
+      <button class="nav" data-page="services">▣ &nbsp; Services</button>
+      <button class="nav" data-page="retailers">♙ &nbsp; Retailer / Users</button>
+      <button class="nav" data-page="wallet">₹ &nbsp; Wallet & Transactions</button>
+      <button class="nav" data-page="rates">⚙ &nbsp; Service Rates</button>
+      <button class="nav" data-page="reports">▤ &nbsp; Reports</button>
+      <button class="nav" data-page="settings">☷ &nbsp; Settings & Backup</button>
+    </nav>
+    <div class="sidebar-note">OFFLINE PERSONAL VERSION<br><span>No API • No live government lookup</span></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><div class="eyebrow">PERSONAL CONTROL PANEL</div><h1 id="pageTitle">Dashboard</h1></div><div class="top-actions"><span class="offline-pill">● Offline Mode</span><button class="btn btn-light" id="exportBtn">Export Backup</button></div></header>
+    <div class="notice"><b>Demo / Offline build:</b> येथे फॉर्म, दर, व्यवहार व नोंदी स्थानिकरीत्या व्यवस्थापित करता येतात. खरा PAN/Aadhaar/Voter/RC सरकारी डेटा मिळत नाही; live lookup साठी अधिकृत provider/API आवश्यक आहे. हा portal सध्या एकाच डिव्हाइसवर वापरण्यासाठी आहे.</div>
+    <section id="dashboard" class="page show">
+      <div class="welcome"><div><span class="eyebrow light">WELCOME BACK</span><h2>Chhatrapati Retailer Portal</h2><p>तुमच्या दुकानातील सेवा, दर आणि व्यवहार एकाच ठिकाणी.</p></div><div class="welcome-icon">✦</div></div>
+      <div class="stats">
+        <div class="stat"><span>Retailers / Users</span><strong id="statUsers">1</strong><small>Local profiles</small></div>
+        <div class="stat"><span>Services</span><strong id="statServices">5</strong><small>Configured services</small></div>
+        <div class="stat"><span>Real Wallet Balance</span><strong id="statWallet">₹0.00</strong><small>Local ledger total</small></div>
+        <div class="stat demo"><span>Demo Balance (NOT REAL)</span><strong>₹99,99,99,999</strong><small>Display only • Not spendable</small></div>
+      </div>
+      <div class="grid2">
+        <div class="panel"><div class="panel-head"><h3>Quick Service</h3><span class="tag">Offline form</span></div>
+          <label>Service<select id="quickService"></select></label>
+          <label>Customer reference / last 4 digits<input id="quickRef" placeholder="Sensitive full ID टाकू नका"></label>
+          <label>Note (optional)<input id="quickNote" placeholder="उदा. customer request"></label>
+          <button class="btn btn-primary" id="quickSubmit">Create Local Request</button>
+          <p class="muted">यातून फक्त local request तयार होईल; सरकारी lookup होणार नाही.</p>
+        </div>
+        <div class="panel"><div class="panel-head"><h3>Recent Transactions</h3><button class="linkbtn" data-goto="wallet">View all →</button></div><div id="recentTx" class="table-wrap"></div></div>
+      </div>
+    </section>
+    <section id="services" class="page">
+      <div class="panel"><div class="panel-head"><div><h3>Service Requests</h3><p class="muted">Local tracking only — no real data lookup.</p></div><span class="tag">No API</span></div>
+        <div class="formgrid"><label>Service<select id="svcName"></select></label><label>Customer reference / last 4 digits<input id="svcRef" placeholder="उदा. 1234"></label><label>Customer name (optional)<input id="svcCustomer" placeholder="नाव"></label><label>Request note<input id="svcNote" placeholder="नोंद"></label></div>
+        <button class="btn btn-primary" id="createRequest">Create Request</button>
+      </div>
+      <div class="panel"><div class="panel-head"><h3>Requests History</h3><input id="requestSearch" class="search" placeholder="Search requests..."></div><div id="requestsTable" class="table-wrap"></div></div>
+    </section>
+    <section id="retailers" class="page">
+      <div class="panel"><div class="panel-head"><h3>Personal Users / Retailers</h3><span class="tag">Single-device demo</span></div>
+        <div class="formgrid"><label>Full name<input id="userName" placeholder="User name"></label><label>Login ID<input id="userLogin" placeholder="Unique ID"></label><label>Phone (optional)<input id="userPhone" placeholder="Mobile number"></label><label>Role<select id="userRole"><option>Admin</option><option>Retailer</option><option>Staff</option></select></label></div>
+        <button class="btn btn-primary" id="addUser">Add Local User</button>
+      </div>
+      <div class="panel"><div class="panel-head"><h3>Users List</h3></div><div id="usersTable" class="table-wrap"></div></div>
+      <p class="muted">ही यादी या ब्राउझरमध्येच सेव्ह होते. खरे multi-user login/password security नाही.</p>
+    </section>
+    <section id="wallet" class="page">
+      <div class="stats compact"><div class="stat"><span>Actual Local Wallet Ledger</span><strong id="walletTotal">₹0.00</strong><small>Not connected to payment gateway</small></div><div class="stat demo"><span>Demo Balance</span><strong>₹99,99,99,999</strong><small>Not actual money</small></div></div>
+      <div class="panel"><div class="panel-head"><h3>Add / Deduct Wallet Entry</h3></div>
+        <div class="formgrid"><label>Action<select id="walletAction"><option value="credit">Credit (+)</option><option value="debit">Debit (−)</option></select></label><label>Amount (₹)<input type="number" id="walletAmount" min="0.01" step="0.01" placeholder="100"></label><label>Reference / person<input id="walletRef" placeholder="उदा. स्वतः / ग्राहक"></label><label>Note<input id="walletNote" placeholder="कारण"></label></div>
+        <button class="btn btn-primary" id="addWallet">Save Ledger Entry</button>
+        <p class="muted">हे manually नोंदवलेले व्यवहार आहेत. पैसे प्रत्यक्ष जमा झाले याची स्वतंत्र खात्री करा.</p>
+      </div>
+      <div class="panel"><div class="panel-head"><h3>Transaction History</h3><button class="btn btn-light" id="txCsv">Download CSV</button></div><div id="txTable" class="table-wrap"></div></div>
+    </section>
+    <section id="rates" class="page">
+      <div class="panel"><div class="panel-head"><h3>Service Rates</h3><span class="tag">Editable</span></div><div id="ratesTable" class="table-wrap"></div><button class="btn btn-primary" id="saveRates">Save Rates</button></div>
+    </section>
+    <section id="reports" class="page">
+      <div class="stats"><div class="stat"><span>Total Requests</span><strong id="reportReq">0</strong></div><div class="stat"><span>Completed (manual status)</span><strong id="reportDone">0</strong></div><div class="stat"><span>Ledger Entries</span><strong id="reportTx">0</strong></div><div class="stat"><span>Wallet Balance</span><strong id="reportBal">₹0.00</strong></div></div>
+      <div class="panel"><div class="panel-head"><h3>Export Data</h3></div><p>Backup JSON मध्ये users, rates, requests आणि local ledger असतील.</p><button class="btn btn-primary" id="reportExport">Download Full Backup</button><button class="btn btn-light" id="reportCsv">Download Transaction CSV</button></div>
+    </section>
+    <section id="settings" class="page">
+      <div class="panel"><h3>Settings & Backup</h3><p class="muted">डेटा या ब्राउझरच्या local storage मध्ये सेव्ह होतो. ब्राउझर data clear केल्यास नोंदी पुसल्या जाऊ शकतात.</p><button class="btn btn-primary" id="settingsExport">Export JSON Backup</button><label class="filelabel">Import Backup JSON<input type="file" id="importFile" accept=".json,application/json"></label><button class="btn btn-danger" id="resetData">Reset All Local Data</button></div>
+      <div class="panel"><h3>Security Note</h3><p>हा offline prototype आहे; यात खरे password login, server database, encryption, payment gateway किंवा government API नाही. Aadhaar/PAN पूर्ण नंबर किंवा कागदपत्रे इथे सेव्ह करू नका.</p></div>
+    </section>
+    <footer>© Chhatrapati Retailer Portal • Personal offline version</footer>
+  </main>
+</div>
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
